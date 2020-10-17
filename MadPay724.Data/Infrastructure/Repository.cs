@@ -115,8 +115,6 @@ namespace MadPay724.Data.Infrastructure
 
 		#region dispose
 
-		//-----------
-
 		private bool _disposed = false;
 		protected virtual void Dispose(bool disposing)
 		{
