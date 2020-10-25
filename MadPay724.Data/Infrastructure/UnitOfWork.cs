@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using MadPay724.Data.Repositories.Repo;
 using Microsoft.EntityFrameworkCore;
 
 namespace MadPay724.Data.Infrastructure
@@ -7,24 +8,44 @@ namespace MadPay724.Data.Infrastructure
 	public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : DbContext, new()
 	{
 		#region ctor
-		protected readonly DbContext Db;
+		protected readonly DbContext _db;
 
 		public UnitOfWork()
 		{
-			Db = new TContext();
+			_db = new TContext();
 		}
 
 		#endregion
 
+		#region privateRepository
+		private UserRepository userRepository { get; set; }
+
+		public UserRepository UserRepository
+		{
+			get
+			{
+				if (userRepository == null)
+				{
+					userRepository = new UserRepository(_db);
+				}
+
+				return userRepository;
+			}
+		}
+		#endregion
+
+
+
 		#region Save
+
 		public void Save()
 		{
-			Db.SaveChanges();
+			_db.SaveChanges();
 		}
 
 		public Task<int> SaveAsync()
 		{
-			return Db.SaveChangesAsync();
+			return _db.SaveChangesAsync();
 		}
 
 		#endregion
@@ -37,7 +58,7 @@ namespace MadPay724.Data.Infrastructure
 			{
 				if (disposing)
 				{
-					Db.Dispose();
+					_db.Dispose();
 				}
 			}
 
