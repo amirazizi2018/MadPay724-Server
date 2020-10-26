@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MadPay724.Data.Models;
+﻿using MadPay724.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace MadPay724.Data.DatabaseContext
 {
-	class MadpayDbContext : DbContext
+	public class MadpayDbContext : DbContext
 	{
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
@@ -17,6 +14,6 @@ namespace MadPay724.Data.DatabaseContext
 		public DbSet<Photo> Photos { get; set; }
 		public DbSet<BankCard> BankCards { get; set; }
 
-		
+
 	}
 }

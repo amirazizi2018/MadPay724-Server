@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using MadPay724.Data.Repositories.Interface;
 using MadPay724.Data.Repositories.Repo;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,9 +19,9 @@ namespace MadPay724.Data.Infrastructure
 		#endregion
 
 		#region privateRepository
-		private UserRepository userRepository { get; set; }
+		private IUserRepository userRepository { get; set; }
 
-		public UserRepository UserRepository
+		public IUserRepository UserRepository
 		{
 			get
 			{
