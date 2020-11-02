@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Infrastructure;
+using MadPay724.Services.Auth.Interface;
+using MadPay724.Services.Auth.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +32,7 @@ namespace MadPay724.Presentation
 			services.AddControllers().AddNewtonsoftJson();
 			services.AddCors();
 			services.AddScoped< IUnitOfWork<MadpayDbContext>, UnitOfWork<MadpayDbContext>>();
+			services.AddScoped<IAuthService, AuthService>();
 			
 		}
 

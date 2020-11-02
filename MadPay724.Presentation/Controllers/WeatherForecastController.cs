@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Infrastructure;
 using MadPay724.Data.Models;
+using MadPay724.Services.Auth.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace MadPay724.Presentation.Controllers
 {
@@ -15,10 +13,12 @@ namespace MadPay724.Presentation.Controllers
 	public class WeatherForecastController : ControllerBase
 	{
 		private readonly IUnitOfWork<MadpayDbContext> _db;
+		private readonly IAuthService _authService;
 
-		public WeatherForecastController(IUnitOfWork<MadpayDbContext> dbContext)
+		public WeatherForecastController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService)
 		{
 			_db = dbContext;
+			_authService = authService;
 		}
 
 		//private static readonly string[] Summaries = new[]
@@ -49,27 +49,25 @@ namespace MadPay724.Presentation.Controllers
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<string>>> Get()
 		{
-			//var user=new User()
-			//{
-			//	Address="",
-			//	City="",
-			//	DateOfBirth="",
-			//	Gender="",
-			//	IsActive=true,
-			//	Name="",
-			//	PasswordHash=new byte[]{0x20, 0x20 , 0x20 , 0x20 , 0x20 , 0x20 , 0x20 },
-			//	PasswordSalt=new byte[]{0x20, 0x20 , 0x20 , 0x20 , 0x20 , 0x20 , 0x20 },
-			//	PhoneNumber="",
-			//	Status=true,
-			//	UserName=""
-			//};
-			//await _db.UserRepository.InsertAsync(user);
-			//await _db.SaveAsync();
+			var user = new User()
+			{
+				Address = "",
+				City = "",
+				DateOfBirth = "",
+				Gender = "",
+				IsActive = true,
+				Name = "",
+				PasswordHash = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 },
+				PasswordSalt = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 },
+				PhoneNumber = "",
+				Status = true,
+				UserName = ""
+			};
 
-			//var users = await _db.UserRepository.GetAllAsync();
+			var u = await _authService.Register(user, "123456");
 
-			//return Ok(users);
-			return Ok("Amir Azizi");
+			return Ok(u);
+			
 		}
 	}
 }
