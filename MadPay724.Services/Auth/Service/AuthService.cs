@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using MadPay724.Common.Helper;
 using MadPay724.Data.DatabaseContext;
-using MadPay724.Data.Infrastructure;
 using MadPay724.Data.Models;
+using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Auth.Interface;
 
 namespace MadPay724.Services.Auth.Service
