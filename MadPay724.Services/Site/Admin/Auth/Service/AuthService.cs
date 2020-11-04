@@ -3,9 +3,9 @@ using MadPay724.Common.Helper;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Models;
 using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Auth.Interface;
+using MadPay724.Services.Site.Admin.Auth.Interface;
 
-namespace MadPay724.Services.Auth.Service
+namespace MadPay724.Services.Site.Admin.Auth.Service
 {
 	public class AuthService : IAuthService
 	{
