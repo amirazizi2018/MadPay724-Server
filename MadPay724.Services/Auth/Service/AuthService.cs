@@ -18,7 +18,18 @@ namespace MadPay724.Services.Auth.Service
 
 		public async Task<User> Login(string username, string password)
 		{
-			throw new System.NotImplementedException();
+			var user = await _db.UserRepository.GetAsync(x => x.UserName == username);
+			if (user == null)
+			{
+				return null;
+			}
+
+			if (!Utilites.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+			{
+				return null;
+			}
+
+			return user;
 		}
 
 		public async Task<User> Register(User user, string password)

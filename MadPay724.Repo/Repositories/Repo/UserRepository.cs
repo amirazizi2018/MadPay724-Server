@@ -16,9 +16,12 @@ namespace MadPay724.Repo.Repositories.Repo
 			_db = (_db ?? (MadpayDbContext)_db);
 		}
 
-		public async Task<User> UserExists(string username)
+		public async Task<bool> UserExists(string username)
 		{
-			throw new System.NotImplementedException();
+			if (await GetAsync(x => x.UserName == username) != null)
+				return true;
+			return false;
 		}
+
 	}
 }
