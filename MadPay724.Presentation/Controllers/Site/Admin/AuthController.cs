@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Dtos.Site.Admin;
 using MadPay724.Data.Models;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;
@@ -24,26 +25,27 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
 			_authService = authService;
 		}
 
-		public async Task<IActionResult> Register(string username, string password)
+		[HttpPost("register")]
+		public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
 		{
-			username = username.ToLower();
-			if (await _db.UserRepository.UserExists(username))
+			userForRegisterDto.UserName = userForRegisterDto.UserName.ToLower();
+			if (await _db.UserRepository.UserExists(userForRegisterDto.UserName))
 				return BadRequest("این نام کاربری وجود دارد");
 
-			var userToCreate=new User
+			var userToCreate = new User
 			{
-				UserName = username,
+				UserName = userForRegisterDto.UserName,
 				Address = "",
 				City = "",
-				DateOfBirth = "",
-				Gender = "",
+				DateOfBirth = DateTime.Now,
+				Gender = true,
 				IsActive = true,
-				Name = "",
-				PhoneNumber = "",
+				Name = userForRegisterDto.Name,
+				PhoneNumber = userForRegisterDto.PhoneNumber,
 				Status = true
 			};
 
-			var createdUser = await _authService.Register(userToCreate, password);
+			var createdUser = await _authService.Register(userToCreate, userForRegisterDto.Password);
 
 			return StatusCode(201);
 
